@@ -1,18 +1,29 @@
 {
   "name": "vue3-template-magic",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "vue3 template transform and codegen ",
+  "main": "lib/vue3-template-magic.cjs.js",
+  "module": "lib/vue3-template-magic.esm.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "build": "rollup -c rollup.config.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "cuixiaorui",
   "license": "ISC",
-  "devDependencies": {
-    "vitest": "^0.10.0"
-  },
-  "dependencies": {
+  "peerDependencies": {
     "@vue/compiler-core": "^3.2.33"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuixiaorui/vue3-template-magic"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@vue/compiler-core": "^3.2.33",
+    "rollup": "^2.70.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.0-dev.20220427",
+    "vitest": "^0.10.0"
   }
 }
