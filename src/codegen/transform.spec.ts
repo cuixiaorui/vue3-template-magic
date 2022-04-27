@@ -4,10 +4,10 @@ import { describe, it, expect } from "vitest";
 describe("transform", () => {
   it("happy path", () => {
     const ast = {
-      type: "root",
+      type: 0,
       children: [
         {
-          type: "element",
+          type: 1,
           tag: "div",
           children: []
         },
@@ -15,7 +15,7 @@ describe("transform", () => {
     };
 
     const plugin = (node: any) => {
-      if (node.type === "element") {
+      if (node.type === 1) {
         node.tag = "span";
       }
     };

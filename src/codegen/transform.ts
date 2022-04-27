@@ -1,3 +1,5 @@
+import { NodeTypes } from "@vue/compiler-core";
+
 export function transform(root: any, options = {}) {
   const context = createTransformContext(root, options);
   traverseNode(root, context);
@@ -22,8 +24,8 @@ function traverseNode(node: any, context: any) {
   }
 
   switch (node.type) {
-    case "root":
-    case "element":
+    case 0:
+    case 1:
       traverseChildren(node, context);
       break;
 
@@ -38,6 +40,7 @@ function traverseNode(node: any, context: any) {
 }
 function traverseChildren(node: any, context: any) {
   const children = node.children;
+  console.log("children-------", children);
 
   for (let i = 0; i < children.length; i++) {
     const node = children[i];
