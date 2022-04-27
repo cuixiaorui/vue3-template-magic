@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { generate } from "./codegen";
-import { baseParse } from "@vue/compiler-core";
+import { generate } from "../src/codegen";
 
 describe("codegen", () => {
   it("simple element", () => {

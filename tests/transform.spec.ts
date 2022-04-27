@@ -1,4 +1,4 @@
-import { transform } from "./transform";
+import { transform } from "../src/transform";
 import { describe, it, expect } from "vitest";
 
 describe("transform", () => {

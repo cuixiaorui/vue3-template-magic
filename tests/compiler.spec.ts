@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { compile } from "./compiler";
+import { compile } from "../src/compiler";
 
 describe("compiler", () => {
   it("happy path", () => {

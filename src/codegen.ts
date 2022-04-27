@@ -1,4 +1,4 @@
-// TODO 这里的 ast 类型应该是从 vue3 中导出
+// TODO ast type from vue3
 export function generate(ast: any) {
   const node = ast.children[0];
 
