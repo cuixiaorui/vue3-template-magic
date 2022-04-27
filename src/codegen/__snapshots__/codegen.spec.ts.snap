@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`codegen >  self closing element   1`] = `"<span/>"`;
+
+exports[`codegen > simple element 1`] = `"<div></div>"`;
