@@ -12,6 +12,9 @@ export default {
       file: pkg.module,
     },
   ],
-
-  plugins: [typescript()],
+  plugins: [
+    typescript({
+      exclude: ["./example/**"],
+    }),
+  ],
 };
