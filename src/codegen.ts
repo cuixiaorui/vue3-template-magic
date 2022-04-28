@@ -75,10 +75,12 @@ function genElementAttributes(node: any, context: Context) {
 
 function genElementAttribute(node: any, context: Context) {
   const { push } = context;
-  let attribute_key = node.name;
-  let attribute_value = node.value.content;
-  const propsCode = ` ${attribute_key}="${attribute_value}"`;
-  push(propsCode);
+  let key = node.name;
+  let value = "";
+  if (node.value) {
+    value = `="${node.value.content}"`;
+  }
+  push(` ${key}${value}`);
 }
 
 function genNodeList(node: any, context: Context) {

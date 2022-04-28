@@ -94,10 +94,10 @@ describe("codegen", () => {
           tag: "div",
           props: [
             {
-              type: NodeTypes.ATTRIBUTE, 
+              type: NodeTypes.ATTRIBUTE,
               name: "id",
               value: {
-                type: NodeTypes.TEXT, 
+                type: NodeTypes.TEXT,
                 content: "test",
               },
             },
@@ -142,6 +142,30 @@ describe("codegen", () => {
     };
 
     const { code } = generate(root);
+    expect(code).toMatchSnapshot();
+  });
+
+  it("html attribute ", () => {
+    // <button disabled></button>
+    const root = {
+      type: "root",
+      children: [
+        {
+          type: NodeTypes.ELEMENT,
+          tag: "button",
+          props: [
+            {
+              type: NodeTypes.ATTRIBUTE,
+              name: "disabled",
+              value: undefined,
+            },
+          ],
+        },
+      ],
+    };
+
+    const { code } = generate(root);
+
     expect(code).toMatchSnapshot();
   });
 });
