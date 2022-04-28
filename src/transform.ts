@@ -1,3 +1,5 @@
+import { NodeTypes } from "./ast";
+
 export function transform(root: any, options = {}) {
   const context = createTransformContext(root, options);
   traverseNode(root, context);
@@ -22,8 +24,8 @@ function traverseNode(node: any, context: any) {
   }
 
   switch (node.type) {
-    case 0:
-    case 1:
+    case NodeTypes.ROOT:
+    case NodeTypes.ELEMENT:
       traverseChildren(node, context);
       break;
 

@@ -1,12 +1,12 @@
 import { describe, it, expect } from "vitest";
+import { NodeTypes } from "../src/ast";
 import { compile } from "../src/compiler";
 
 describe("compiler", () => {
   it("happy path", () => {
 
     function plugin(node: any) {
-      // 1 代表的是 element
-      if (node.type === 1) {
+      if (node.type === NodeTypes.ELEMENT) {
         node.tag = "span";
       }
     }
