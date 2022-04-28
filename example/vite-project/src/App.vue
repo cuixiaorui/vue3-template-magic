@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div></div>
+  <div>hi,vue3-template-magic</div>
 </template>
 
 <style>
