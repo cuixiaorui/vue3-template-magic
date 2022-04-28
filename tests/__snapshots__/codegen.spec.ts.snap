@@ -2,6 +2,12 @@
 
 exports[`codegen >  self closing element   1`] = `"<span/>"`;
 
-exports[`codegen > element children is text  1`] = `"<div>hi</div>"`;
+exports[`codegen > element children have one text node  1`] = `"<div>hi</div>"`;
+
+exports[`codegen > element children have two  node of text and element  1`] = `"<div>hi<span></span></div>"`;
+
+exports[`codegen > multi props 1`] = `"<div id=\\"test\\" class=\\"red\\"></div>"`;
 
 exports[`codegen > simple element 1`] = `"<div></div>"`;
+
+exports[`codegen > simple props 1`] = `"<div id=\\"test\\"></div>"`;

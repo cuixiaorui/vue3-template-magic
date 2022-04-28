@@ -42,9 +42,8 @@ function genNode(node: any, context: Context) {
 }
 
 function genText(node: any, context: Context) {
-  const {push} = context
-  push(`${node.content}`)
-
+  const { push } = context;
+  push(`${node.content}`);
 }
 
 function genElement(node: any, context: Context) {
@@ -55,12 +54,36 @@ function genElement(node: any, context: Context) {
   if (isSelfClosing) {
     push(`<${tagName}/>`);
   } else {
+    push(`<${tagName}`);
+    genElementAttributes(node, context);
+    push(`>`);
 
-    push(`<${tagName}>`);
     if (node.children?.length > 0) {
-      // 这里应该循环
-      genNode(node.children[0], context);
+      genNodeList(node, context);
     }
     push(`</${tagName}>`);
+  }
+}
+
+function genElementAttributes(node: any, context: Context) {
+  if (!node.props || node.props.length === 0) return;
+
+  node.props.forEach((propsNode: any) =>
+    genElementAttribute(propsNode, context)
+  );
+}
+
+function genElementAttribute(node: any, context: Context) {
+  const { push } = context;
+  let attribute_key = node.name;
+  let attribute_value = node.value.content;
+  const propsCode = ` ${attribute_key}="${attribute_value}"`;
+  push(propsCode);
+}
+
+function genNodeList(node: any, context: Context) {
+  const children = node.children;
+  for (let i = 0; i < children.length; i++) {
+    genNode(children[i], context);
   }
 }
