@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@vitejs/plugin-vue': ^2.3.1
+  '@vue/compiler-sfc': ^3.2.33
   typescript: ^4.5.4
   vite: ^2.9.5
   vue: ^3.2.25
@@ -12,6 +13,7 @@ dependencies:
 
 devDependencies:
   '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/2.3.1_vite@2.9.6+vue@3.2.33
+  '@vue/compiler-sfc': registry.npmmirror.com/@vue/compiler-sfc/3.2.33
   typescript: registry.npmmirror.com/typescript/4.6.3
   vite: registry.npmmirror.com/vite/2.9.6
   vue-tsc: registry.npmmirror.com/vue-tsc/0.34.10_typescript@4.6.3
