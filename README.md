@@ -2,8 +2,10 @@
 
 ## tasking
 
-- [ ] 属性
+- [ ] 注释节点
+- [x] 属性
   - <div id="123"></div>
+  - <button disabled></button>
 - [ ] prop
 - [ ] 事件绑定
 - [ ] v-model
