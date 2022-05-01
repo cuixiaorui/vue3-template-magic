@@ -4,7 +4,6 @@ import { compile } from "../src/compiler";
 
 describe("compiler", () => {
   it("happy path", () => {
-
     function plugin(node: any) {
       if (node.type === NodeTypes.ELEMENT) {
         node.tag = "span";
