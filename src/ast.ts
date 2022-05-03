@@ -1,5 +1,3 @@
-// not worked with vue3 export
-// so self defined
 export const enum NodeTypes {
   ROOT,
   ELEMENT,
@@ -32,4 +30,43 @@ export const enum NodeTypes {
   JS_ASSIGNMENT_EXPRESSION,
   JS_SEQUENCE_EXPRESSION,
   JS_RETURN_STATEMENT,
+}
+
+export const enum ElementTypes {
+  ELEMENT,
+  COMPONENT,
+  SLOT,
+  TEMPLATE,
+}
+
+export interface TextNode extends Node {
+  type: NodeTypes.TEXT;
+  content: string;
+}
+export interface AttributeNode extends Node {
+  type: NodeTypes.ATTRIBUTE;
+  name: string;
+  value: TextNode | undefined;
+}
+
+export interface BaseElementNode extends Node {
+  type: NodeTypes.ELEMENT;
+  tag: string;
+  tagType: ElementTypes;
+  isSelfClosing: boolean;
+  props: Array<AttributeNode>;
+  children: TemplateChildNode[];
+}
+
+export type ElementNode = PlainElementNode;
+
+export interface PlainElementNode extends BaseElementNode {
+  tagType: ElementTypes.ELEMENT;
+}
+
+export type TemplateChildNode = ElementNode | TextNode;
+
+export declare interface RootNode extends Node {
+  type: NodeTypes.ROOT;
+  children: TemplateChildNode[];
 }

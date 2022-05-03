@@ -1,12 +1,18 @@
-import { NodeTypes } from "./ast";
+import {
+  AttributeNode,
+  ElementNode,
+  NodeTypes,
+  RootNode,
+  TemplateChildNode,
+  TextNode,
+} from "./ast";
 
 interface Context {
   code: string;
   push(code: string): void;
 }
 
-// TODO ast type from vue3
-export function generate(ast: any) {
+export function generate(ast: RootNode) {
   const context = createCodegenContext();
   const node = ast.children[0];
 
@@ -28,7 +34,7 @@ function createCodegenContext(): Context {
   return context;
 }
 
-function genNode(node: any, context: Context) {
+function genNode(node: TemplateChildNode, context: Context) {
   switch (node.type) {
     case NodeTypes.ELEMENT:
       genElement(node, context);
@@ -41,12 +47,12 @@ function genNode(node: any, context: Context) {
   }
 }
 
-function genText(node: any, context: Context) {
+function genText(node: TextNode, context: Context) {
   const { push } = context;
   push(`${node.content}`);
 }
 
-function genElement(node: any, context: Context) {
+function genElement(node: ElementNode, context: Context) {
   const { push } = context;
   const tagName = node.tag;
   const isSelfClosing = node.isSelfClosing;
@@ -55,7 +61,7 @@ function genElement(node: any, context: Context) {
     push(`<${tagName}/>`);
   } else {
     push(`<${tagName}`);
-    genElementAttributes(node, context);
+    genElementAttributes(node.props, context);
     push(`>`);
 
     if (node.children?.length > 0) {
@@ -65,15 +71,13 @@ function genElement(node: any, context: Context) {
   }
 }
 
-function genElementAttributes(node: any, context: Context) {
-  if (!node.props || node.props.length === 0) return;
+function genElementAttributes(node: AttributeNode[], context: Context) {
+  if (!node) return;
 
-  node.props.forEach((propsNode: any) =>
-    genElementAttribute(propsNode, context)
-  );
+  node.forEach((propsNode) => genElementAttribute(propsNode, context));
 }
 
-function genElementAttribute(node: any, context: Context) {
+function genElementAttribute(node: AttributeNode, context: Context) {
   const { push } = context;
   let key = node.name;
   let value = "";
@@ -83,7 +87,7 @@ function genElementAttribute(node: any, context: Context) {
   push(` ${key}${value}`);
 }
 
-function genNodeList(node: any, context: Context) {
+function genNodeList(node: ElementNode, context: Context) {
   const children = node.children;
   for (let i = 0; i < children.length; i++) {
     genNode(children[i], context);
