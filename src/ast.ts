@@ -53,7 +53,7 @@ export interface AttributeNode extends Node {
   value: TextNode | undefined;
 }
 
-export interface BaseElementNode extends Node {
+export interface BaseElementNode {
   type: NodeTypes.ELEMENT;
   tag: string;
   tagType: ElementTypes;
@@ -73,4 +73,42 @@ export type TemplateChildNode = ElementNode | TextNode;
 export declare interface RootNode extends Node {
   type: NodeTypes.ROOT;
   children: TemplateChildNode[];
+}
+
+export function createElementNode(options: Partial<ElementNode>): ElementNode {
+  return {
+    type: NodeTypes.ELEMENT,
+    tag: "div",
+    tagType: ElementTypes.ELEMENT,
+    isSelfClosing: false,
+    props: [],
+    children: [],
+    ...options,
+  };
+}
+
+export function createTextNode(content: string): TextNode {
+  return {
+    type: NodeTypes.TEXT,
+    content,
+  };
+}
+
+export function createRootNode(options: Partial<RootNode>): RootNode {
+  return {
+    type: NodeTypes.ROOT,
+    children: [],
+    ...options,
+  };
+}
+
+export function createAttributeNode(
+  name: string,
+  value?: AttributeNode["value"]
+): AttributeNode {
+  return {
+    type: NodeTypes.ATTRIBUTE,
+    name,
+    value,
+  };
 }
