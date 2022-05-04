@@ -5,8 +5,6 @@ import {
   createElementNode,
   createRootNode,
   createTextNode,
-  NodeTypes,
-  RootNode,
 } from "../src/ast";
 import { baseParse } from "@vue/compiler-core";
 
@@ -17,7 +15,7 @@ describe("codegen", () => {
     });
 
     const { code } = generate(root);
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<div></div>"');
   });
 
   it(" self closing element  ", () => {
@@ -26,11 +24,10 @@ describe("codegen", () => {
     });
 
     const { code } = generate(root);
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<span/>"');
   });
 
   it("element children have one text node ", () => {
-    // <div>hi</div>
     const root = createRootNode({
       children: [
         createElementNode({
@@ -41,11 +38,10 @@ describe("codegen", () => {
     });
 
     const { code } = generate(root);
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<div>hi</div>"');
   });
 
   it("element children have two  node of text and element ", () => {
-    // <div>hi<span></span></div>
     const root = createRootNode({
       children: [
         createElementNode({
@@ -61,11 +57,10 @@ describe("codegen", () => {
     });
 
     const { code } = generate(root);
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<div>hi<span></span></div>"');
   });
 
   it("simple props", () => {
-    // <div id="test"></div>
     const root = createRootNode({
       children: [
         createElementNode({
@@ -76,7 +71,7 @@ describe("codegen", () => {
     });
 
     const { code } = generate(root);
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<div id=\\"test\\"></div>"');
   });
 
   it("multi props", () => {
@@ -94,11 +89,12 @@ describe("codegen", () => {
     });
 
     const { code } = generate(root);
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot(
+      '"<div id=\\"test\\" class=\\"red\\"></div>"'
+    );
   });
 
   it("html attribute ", () => {
-    // <button disabled></button>
     const root = createRootNode({
       children: [
         createElementNode({
@@ -110,6 +106,6 @@ describe("codegen", () => {
 
     const { code } = generate(root);
 
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<button disabled></button>"');
   });
 });
