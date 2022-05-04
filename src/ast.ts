@@ -32,6 +32,10 @@ export const enum NodeTypes {
   JS_RETURN_STATEMENT,
 }
 
+export interface Node {
+  type: NodeTypes;
+}
+
 export const enum ElementTypes {
   ELEMENT,
   COMPONENT,
