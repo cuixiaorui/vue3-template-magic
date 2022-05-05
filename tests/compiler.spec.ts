@@ -14,6 +14,6 @@ describe("compiler", () => {
       nodeTransforms: [plugin],
     });
 
-    expect(code).toMatchSnapshot();
+    expect(code).toMatchInlineSnapshot('"<span></span>"')
   });
 });
