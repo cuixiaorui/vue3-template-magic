@@ -3,6 +3,7 @@ import { generate } from "../src/codegen";
 import {
   createAttributeNode,
   createElementNode,
+  createInterpolationNode,
   createRootNode,
   createTextNode,
 } from "../src/ast";
@@ -108,4 +109,22 @@ describe("codegen", () => {
 
     expect(code).toMatchInlineSnapshot('"<button disabled></button>"');
   });
+
+  it("simple interpolation", () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "div",
+          children: [
+            createInterpolationNode("msg"),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot('"<div>{{msg}}</div>"');
+  });
+
 });

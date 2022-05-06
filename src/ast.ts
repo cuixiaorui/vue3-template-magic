@@ -47,6 +47,11 @@ export interface TextNode extends Node {
   type: NodeTypes.TEXT;
   content: string;
 }
+
+export interface InterpolationNode extends Node {
+  type: NodeTypes.INTERPOLATION;
+  content: string;
+}
 export interface AttributeNode extends Node {
   type: NodeTypes.ATTRIBUTE;
   name: string;
@@ -68,7 +73,7 @@ export interface PlainElementNode extends BaseElementNode {
   tagType: ElementTypes.ELEMENT;
 }
 
-export type TemplateChildNode = ElementNode | TextNode;
+export type TemplateChildNode = ElementNode | TextNode | InterpolationNode;
 
 export declare interface RootNode extends Node {
   type: NodeTypes.ROOT;
@@ -84,6 +89,13 @@ export function createElementNode(options: Partial<ElementNode>): ElementNode {
     props: [],
     children: [],
     ...options,
+  };
+}
+
+export function createInterpolationNode(content: string): InterpolationNode {
+  return {
+    type: NodeTypes.INTERPOLATION,
+    content,
   };
 }
 

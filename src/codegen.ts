@@ -1,6 +1,7 @@
 import {
   AttributeNode,
   ElementNode,
+  InterpolationNode,
   NodeTypes,
   RootNode,
   TemplateChildNode,
@@ -42,6 +43,8 @@ function genNode(node: TemplateChildNode, context: Context) {
     case NodeTypes.TEXT:
       genText(node, context);
       break;
+    case NodeTypes.INTERPOLATION:
+      genInterpolation(node, context);
     default:
       break;
   }
@@ -92,4 +95,10 @@ function genNodeList(node: ElementNode, context: Context) {
   for (let i = 0; i < children.length; i++) {
     genNode(children[i], context);
   }
+}
+function genInterpolation(node: InterpolationNode, context: COntext) {
+  const { push } = context;
+  push(`{{`)
+  push(`${node.content}`);
+  push(`}}`)
 }
