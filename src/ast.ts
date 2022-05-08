@@ -63,8 +63,23 @@ export interface BaseElementNode {
   tag: string;
   tagType: ElementTypes;
   isSelfClosing: boolean;
-  props: Array<AttributeNode>;
+  props: Array<AttributeNode | DirectiveNode>;
   children: TemplateChildNode[];
+}
+
+export interface SimpleExpressionNode extends Node {
+  type: NodeTypes.SIMPLE_EXPRESSION;
+  content: string;
+}
+
+export type ExpressionNode = SimpleExpressionNode;
+
+export interface DirectiveNode extends Node {
+  type: NodeTypes.DIRECTIVE;
+  name: string;
+  exp: ExpressionNode | undefined;
+  arg: ExpressionNode | undefined;
+  modifiers: string[];
 }
 
 export type ElementNode = PlainElementNode;
@@ -111,6 +126,23 @@ export function createRootNode(options: Partial<RootNode>): RootNode {
     type: NodeTypes.ROOT,
     children: [],
     ...options,
+  };
+}
+
+export function createDirectiveNode(
+  name: string,
+  content: string,
+  arg: any
+): DirectiveNode {
+  return {
+    type: NodeTypes.DIRECTIVE,
+    name,
+    exp: {
+      type: NodeTypes.SIMPLE_EXPRESSION,
+      content,
+    },
+    arg,
+    modifiers: [],
   };
 }
 

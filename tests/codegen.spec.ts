@@ -2,10 +2,12 @@ import { describe, it, expect } from "vitest";
 import { generate } from "../src/codegen";
 import {
   createAttributeNode,
+  createDirectiveNode,
   createElementNode,
   createInterpolationNode,
   createRootNode,
   createTextNode,
+  NodeTypes,
 } from "../src/ast";
 import { baseParse } from "@vue/compiler-core";
 
@@ -115,9 +117,7 @@ describe("codegen", () => {
       children: [
         createElementNode({
           tag: "div",
-          children: [
-            createInterpolationNode("msg"),
-          ],
+          children: [createInterpolationNode("msg")],
         }),
       ],
     });
@@ -127,4 +127,44 @@ describe("codegen", () => {
     expect(code).toMatchInlineSnapshot('"<div>{{msg}}</div>"');
   });
 
+  it("v-html", () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "span",
+          props: [createDirectiveNode("html", "rawHtml", null)],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot('"<span v-html=\\"rawHtml\\"></span>"');
+  });
+
+  it("v-bind", () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "span",
+          props: [
+            createDirectiveNode("bind", "dynamicId", {
+              type: 4,
+              content: "id",
+              isStatic: true,
+              constType: 3,
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot(
+      '"<span v-bind:id=\\"dynamicId\\"></span>"'
+    );
+  });
+
+  it.todo('<div :id="dynamicId"></div>', () => {});
 });

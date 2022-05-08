@@ -1,5 +1,6 @@
 import {
   AttributeNode,
+  DirectiveNode,
   ElementNode,
   InterpolationNode,
   NodeTypes,
@@ -64,7 +65,7 @@ function genElement(node: ElementNode, context: Context) {
     push(`<${tagName}/>`);
   } else {
     push(`<${tagName}`);
-    genElementAttributes(node.props, context);
+    genElementProps(node.props, context);
     push(`>`);
 
     if (node.children?.length > 0) {
@@ -74,10 +75,30 @@ function genElement(node: ElementNode, context: Context) {
   }
 }
 
-function genElementAttributes(node: AttributeNode[], context: Context) {
+function genElementProps(
+  node: (AttributeNode | DirectiveNode)[],
+  context: Context
+) {
   if (!node) return;
 
-  node.forEach((propsNode) => genElementAttribute(propsNode, context));
+  node.forEach((propsNode) => {
+    switch (propsNode.type) {
+      case NodeTypes.ATTRIBUTE:
+        genElementAttribute(propsNode, context);
+        break;
+      case NodeTypes.DIRECTIVE:
+        genElementDirective(propsNode, context);
+        break;
+    }
+  });
+}
+
+function genElementDirective(node: DirectiveNode, context: Context) {
+  const { push } = context;
+  let key = `v-${node.name}`;
+  let value = node.exp?.content;
+  let arg = node.arg ? `:${node.arg.content}` : "";
+  push(` ${key}${arg}="${value}"`);
 }
 
 function genElementAttribute(node: AttributeNode, context: Context) {
@@ -96,9 +117,9 @@ function genNodeList(node: ElementNode, context: Context) {
     genNode(children[i], context);
   }
 }
-function genInterpolation(node: InterpolationNode, context: COntext) {
+function genInterpolation(node: InterpolationNode, context: Context) {
   const { push } = context;
-  push(`{{`)
+  push(`{{`);
   push(`${node.content}`);
-  push(`}}`)
+  push(`}}`);
 }
