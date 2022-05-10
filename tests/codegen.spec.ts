@@ -4,6 +4,7 @@ import {
   createAttributeNode,
   createDirectiveNode,
   createElementNode,
+  createExpressNode,
   createInterpolationNode,
   createRootNode,
   createTextNode,
@@ -132,7 +133,7 @@ describe("codegen", () => {
       children: [
         createElementNode({
           tag: "span",
-          props: [createDirectiveNode("html", "rawHtml", null)],
+          props: [createDirectiveNode("html", createExpressNode("rawHtml"))],
         }),
       ],
     });
@@ -148,12 +149,11 @@ describe("codegen", () => {
         createElementNode({
           tag: "span",
           props: [
-            createDirectiveNode("bind", "dynamicId", {
-              type: 4,
-              content: "id",
-              isStatic: true,
-              constType: 3,
-            }),
+            createDirectiveNode(
+              "bind",
+              createExpressNode("dynamicId"),
+              createExpressNode("id")
+            ),
           ],
         }),
       ],

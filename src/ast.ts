@@ -131,16 +131,14 @@ export function createRootNode(options: Partial<RootNode>): RootNode {
 
 export function createDirectiveNode(
   name: string,
-  content: string,
-  arg: any
+  exp: ExpressionNode | undefined = undefined,
+  arg: ExpressionNode | undefined = undefined,
+  modifiers = []
 ): DirectiveNode {
   return {
     type: NodeTypes.DIRECTIVE,
     name,
-    exp: {
-      type: NodeTypes.SIMPLE_EXPRESSION,
-      content,
-    },
+    exp,
     arg,
     modifiers: [],
   };
@@ -154,5 +152,12 @@ export function createAttributeNode(
     type: NodeTypes.ATTRIBUTE,
     name,
     value,
+  };
+}
+
+export function createExpressNode(content: string): ExpressionNode {
+  return {
+    type: 4,
+    content,
   };
 }
