@@ -166,5 +166,26 @@ describe("codegen", () => {
     );
   });
 
-  it.todo('<div :id="dynamicId"></div>', () => {});
+  it('<div :id="dynamicId"></div>', () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "div",
+          props: [
+            createDirectiveNode(
+              "bind",
+              createExpressNode("dynamicId"),
+              createExpressNode("id"),
+              [],
+              true
+            ),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot('"<div :id=\\"dynamicId\\"></div>"');
+  });
 });

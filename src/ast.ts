@@ -80,6 +80,7 @@ export interface DirectiveNode extends Node {
   exp: ExpressionNode | undefined;
   arg: ExpressionNode | undefined;
   modifiers: string[];
+  loc: { source: string };
 }
 
 export type ElementNode = PlainElementNode;
@@ -133,14 +134,23 @@ export function createDirectiveNode(
   name: string,
   exp: ExpressionNode | undefined = undefined,
   arg: ExpressionNode | undefined = undefined,
-  modifiers = []
+  modifiers = [],
+  isShorthand = false
 ): DirectiveNode {
+  const argContent = arg?.content;
+  const expContent = exp?.content;
+
+  const loc = isShorthand
+    ? { source: `:${argContent}='${expContent}'` }
+    : { source: `v-${name}:${argContent}='${expContent}'` };
+
   return {
     type: NodeTypes.DIRECTIVE,
     name,
     exp,
     arg,
     modifiers: [],
+    loc,
   };
 }
 
