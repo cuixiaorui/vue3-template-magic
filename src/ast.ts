@@ -50,7 +50,7 @@ export interface TextNode extends Node {
 
 export interface InterpolationNode extends Node {
   type: NodeTypes.INTERPOLATION;
-  content: string;
+  content: ExpressionNode;
 }
 export interface AttributeNode extends Node {
   type: NodeTypes.ATTRIBUTE;
@@ -108,7 +108,7 @@ export function createElementNode(options: Partial<ElementNode>): ElementNode {
   };
 }
 
-export function createInterpolationNode(content: string): InterpolationNode {
+export function createInterpolationNode(content: SimpleExpressionNode): InterpolationNode {
   return {
     type: NodeTypes.INTERPOLATION,
     content,

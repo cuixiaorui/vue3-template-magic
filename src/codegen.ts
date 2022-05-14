@@ -2,6 +2,7 @@ import {
   AttributeNode,
   DirectiveNode,
   ElementNode,
+  ExpressionNode,
   InterpolationNode,
   NodeTypes,
   RootNode,
@@ -97,8 +98,8 @@ function genElementDirective(node: DirectiveNode, context: Context) {
   const { push } = context;
   // vue3 没有提供属性来判断是不是简写，所以这里通过 loc.source 来判断
   // 有 v- 的话认为是全写
-  const isShorthand = node.loc.source.includes("v-") 
-  let key =  isShorthand ? `v-${node.name}`: ""
+  const isShorthand = node.loc.source.includes("v-");
+  let key = isShorthand ? `v-${node.name}` : "";
   let value = node.exp?.content;
   let arg = node.arg ? `:${node.arg.content}` : "";
   push(` ${key}${arg}="${value}"`);
@@ -123,6 +124,12 @@ function genNodeList(node: ElementNode, context: Context) {
 function genInterpolation(node: InterpolationNode, context: Context) {
   const { push } = context;
   push(`{{`);
-  push(`${node.content}`);
+  genExpression(node.content, context)
   push(`}}`);
+}
+
+function genExpression(node: ExpressionNode, content: Context) {
+  const { push } = content;
+
+  push(`${node.content}`);
 }

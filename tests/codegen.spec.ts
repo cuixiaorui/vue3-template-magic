@@ -118,7 +118,7 @@ describe("codegen", () => {
       children: [
         createElementNode({
           tag: "div",
-          children: [createInterpolationNode("msg")],
+          children: [createInterpolationNode(createExpressNode("msg"))],
         }),
       ],
     });
@@ -127,6 +127,27 @@ describe("codegen", () => {
 
     expect(code).toMatchInlineSnapshot('"<div>{{msg}}</div>"');
   });
+
+  // it.only("express with interpolation", () => {
+  //   // {{ ok ? 'YES' : 'NO' }}
+  //   // const root = baseParse("<div>{{ok? 'YES' : 'NO'}}</div>");
+  //   const root = baseParse("<div>{123}</div>");
+  //   console.log(root.children[0].children[0])
+  //   // console.log(root)
+
+  //   // const { code } = generate(root);
+
+  //   // expect(code).toMatchInlineSnapshot('"<div>{{msg}}</div>"');
+
+  //   // const root = createRootNode({
+  //   //   children: [
+  //   //     createElementNode({
+  //   //       tag: "div",
+  //   //       children: [createInterpolationNode("msg")],
+  //   //     }),
+  //   //   ],
+  //   // });
+  // });
 
   it("v-html", () => {
     const root = createRootNode({
