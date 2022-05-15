@@ -128,26 +128,15 @@ describe("codegen", () => {
     expect(code).toMatchInlineSnapshot('"<div>{{msg}}</div>"');
   });
 
-  // it.only("express with interpolation", () => {
-  //   // {{ ok ? 'YES' : 'NO' }}
-  //   // const root = baseParse("<div>{{ok? 'YES' : 'NO'}}</div>");
-  //   const root = baseParse("<div>{123}</div>");
-  //   console.log(root.children[0].children[0])
-  //   // console.log(root)
+  it("only expression", () => {
+    const root = createRootNode({
+      children: [createInterpolationNode(createExpressNode("var a = 1"))],
+    });
 
-  //   // const { code } = generate(root);
+    const { code } = generate(root);
 
-  //   // expect(code).toMatchInlineSnapshot('"<div>{{msg}}</div>"');
-
-  //   // const root = createRootNode({
-  //   //   children: [
-  //   //     createElementNode({
-  //   //       tag: "div",
-  //   //       children: [createInterpolationNode("msg")],
-  //   //     }),
-  //   //   ],
-  //   // });
-  // });
+    expect(code).toMatchInlineSnapshot('"{{var a = 1}}"');
+  });
 
   it("v-html", () => {
     const root = createRootNode({
