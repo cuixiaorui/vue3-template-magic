@@ -2,17 +2,16 @@
 
 ## tasking
 
-- [ ] 注释节点
 - [x] 属性
-  - <div id="123"></div>
-  - <button disabled></button>
-- [ ] prop
+  - `<div id="123"></div>`
+  - `<button disabled></button>`
+- [x] prop
+- [x] 插值
+- [x] 指令 v-id
+  - 简写 :id
 - [ ] 事件绑定
 - [ ] v-model
-- [ ] 插值
-  - 表达式
-- [ ] 指令 v-id
-  - 简写 :id
+- [ ] 注释节点
 - [ ] 内置的指令
   - v-for
   - v-html
