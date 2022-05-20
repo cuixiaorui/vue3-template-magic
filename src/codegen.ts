@@ -98,9 +98,10 @@ function genElementDirective(node: DirectiveNode, context: Context) {
   const { push } = context;
   // vue3 没有提供属性来判断是不是简写，所以这里通过 loc.source 来判断
   // 有 v- 的话认为是全写
-  const isShorthand = node.loc.source.includes("v-");
-  let key = isShorthand ? `v-${node.name}` : "";
+  const isShorthand = !node.loc.source.includes("v-");
+  let key = isShorthand ? '':`v-${node.name}`
   let value = node.exp?.content;
+  // let arg = node.arg ? `${isShorthand && node.name === 'on'? '@': ':'}${node.arg.content}` : "";
   let arg = node.arg ? `:${node.arg.content}` : "";
   push(` ${key}${arg}="${value}"`);
 }
