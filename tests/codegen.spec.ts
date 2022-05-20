@@ -198,4 +198,55 @@ describe("codegen", () => {
 
     expect(code).toMatchInlineSnapshot('"<div :id=\\"dynamicId\\"></div>"');
   });
+
+  it('v-on:click', () => { 
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "div",
+          props: [
+            createDirectiveNode(
+              "on",
+              createExpressNode("doSomething"),
+              createExpressNode("click"),
+            ),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot(
+      '"<div v-on:click=\\"doSomething\\"></div>"'
+    );
+
+   })
+
+
+  it('v-on:click shorthand ', () => { 
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "div",
+          props: [
+            createDirectiveNode(
+              "on",
+              createExpressNode("doSomething"),
+              createExpressNode("click"),
+              [],
+              true
+            ),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot(
+      '"<div @click=\\"doSomething\\"></div>"'
+    );
+
+   })
 });

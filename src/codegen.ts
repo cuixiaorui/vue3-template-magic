@@ -101,8 +101,8 @@ function genElementDirective(node: DirectiveNode, context: Context) {
   const isShorthand = !node.loc.source.includes("v-");
   let key = isShorthand ? '':`v-${node.name}`
   let value = node.exp?.content;
-  // let arg = node.arg ? `${isShorthand && node.name === 'on'? '@': ':'}${node.arg.content}` : "";
-  let arg = node.arg ? `:${node.arg.content}` : "";
+  let symbol = isShorthand && node.name === 'on'? '@': ':'
+  let arg = node.arg ? `${symbol}${node.arg.content}` : "";
   push(` ${key}${arg}="${value}"`);
 }
 
