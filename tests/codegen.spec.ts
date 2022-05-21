@@ -249,4 +249,20 @@ describe("codegen", () => {
     );
 
    })
+
+
+   it('v-if-else', () => {
+     const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "span",
+          props: [createDirectiveNode("if-else", createExpressNode("isShow"))],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot('"<span v-if-else=\\"isShow\\"></span>"');    
+   });
 });
