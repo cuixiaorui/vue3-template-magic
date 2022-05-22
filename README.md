@@ -9,10 +9,8 @@
 - [x] 插值
 - [x] 指令 v-id
   - 简写 :id
-- [ ] 事件绑定
-- [ ] v-model
-- [ ] 注释节点
-- [ ] 内置的指令
+- [x] 事件绑定
+- [x] 内置的指令
   - v-for
   - v-html
   - v-on
@@ -20,6 +18,8 @@
   - v-else
   - v-else-if
 - [ ] 指令的参数
+- [ ] v-model
+- [ ] 注释节点
 - [ ] Dynamic Arguments
 - [ ] Modifiers
 
