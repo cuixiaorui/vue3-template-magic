@@ -134,7 +134,7 @@ export function createDirectiveNode(
   name: string,
   exp: ExpressionNode | undefined = undefined,
   arg: ExpressionNode | undefined = undefined,
-  modifiers = [],
+  modifiers:string[] = [],
   isShorthand = false
 ): DirectiveNode {
   const argContent = arg?.content;
@@ -149,7 +149,7 @@ export function createDirectiveNode(
     name,
     exp,
     arg,
-    modifiers: [],
+    modifiers,
     loc,
   };
 }

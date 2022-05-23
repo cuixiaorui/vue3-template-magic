@@ -199,7 +199,7 @@ describe("codegen", () => {
     expect(code).toMatchInlineSnapshot('"<div :id=\\"dynamicId\\"></div>"');
   });
 
-  it('v-on:click', () => { 
+  it("v-on:click", () => {
     const root = createRootNode({
       children: [
         createElementNode({
@@ -208,7 +208,7 @@ describe("codegen", () => {
             createDirectiveNode(
               "on",
               createExpressNode("doSomething"),
-              createExpressNode("click"),
+              createExpressNode("click")
             ),
           ],
         }),
@@ -220,11 +220,9 @@ describe("codegen", () => {
     expect(code).toMatchInlineSnapshot(
       '"<div v-on:click=\\"doSomething\\"></div>"'
     );
+  });
 
-   })
-
-
-  it('v-on:click shorthand ', () => { 
+  it("v-on:click shorthand ", () => {
     const root = createRootNode({
       children: [
         createElementNode({
@@ -247,12 +245,10 @@ describe("codegen", () => {
     expect(code).toMatchInlineSnapshot(
       '"<div @click=\\"doSomething\\"></div>"'
     );
+  });
 
-   })
-
-
-   it('v-if-else', () => {
-     const root = createRootNode({
+  it("v-if-else", () => {
+    const root = createRootNode({
       children: [
         createElementNode({
           tag: "span",
@@ -263,6 +259,28 @@ describe("codegen", () => {
 
     const { code } = generate(root);
 
-    expect(code).toMatchInlineSnapshot('"<span v-if-else=\\"isShow\\"></span>"');    
-   });
+    expect(code).toMatchInlineSnapshot(
+      '"<span v-if-else=\\"isShow\\"></span>"'
+    );
+  });
+
+  it("Modifiers", () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "div",
+          props: [
+            createDirectiveNode("model", createExpressNode("age"), undefined, [
+              "number",
+              "lazy"
+            ]),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot('"<div v-model.number.lazy=\\"age\\"></div>"');
+  });
 });
