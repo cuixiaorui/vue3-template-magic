@@ -100,11 +100,23 @@ function genElementDirective(node: DirectiveNode, context: Context) {
   // 有 v- 的话认为是全写
   const isShorthand = !node.loc.source.includes("v-");
   let key = isShorthand ? "" : `v-${node.name}`;
-  let modifiersStr = node.modifiers.map( s => '.'+s).join("")
+  let modifiersStr = node.modifiers.map((s) => "." + s).join("");
   let value = node.exp?.content;
   let symbol = isShorthand && node.name === "on" ? "@" : ":";
-  let arg = node.arg ? `${symbol}${node.arg.content}` : "";
+  let arg = genArgString(node.arg, symbol);
   push(` ${key}${modifiersStr}${arg}="${value}"`);
+}
+
+function genArgString(node: ExpressionNode | undefined, symbol: string) {
+  if(!node) return ""
+
+  let argContent = node ? `${node.content}` : "";
+
+  if(!node.isStatic){
+    return `[${argContent}]`
+  }else{
+    return `${symbol}${argContent}`
+  }
 }
 
 function genElementAttribute(node: AttributeNode, context: Context) {

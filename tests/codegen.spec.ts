@@ -283,4 +283,26 @@ describe("codegen", () => {
 
     expect(code).toMatchInlineSnapshot('"<div v-model.number.lazy=\\"age\\"></div>"');
   });
+
+
+  it('Dynamic Arguments', () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "a",
+          props: [
+            createDirectiveNode(
+              "bind",
+              createExpressNode("url"),
+              createExpressNode("attributeName", false),
+            ),
+          ],
+        }),
+      ],
+    });
+
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot('"<a v-bind[attributeName]=\\"url\\"></a>"');
+  });
 });

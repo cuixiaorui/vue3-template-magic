@@ -70,6 +70,7 @@ export interface BaseElementNode {
 export interface SimpleExpressionNode extends Node {
   type: NodeTypes.SIMPLE_EXPRESSION;
   content: string;
+  isStatic: boolean
 }
 
 export type ExpressionNode = SimpleExpressionNode;
@@ -165,9 +166,10 @@ export function createAttributeNode(
   };
 }
 
-export function createExpressNode(content: string): ExpressionNode {
+export function createExpressNode(content: string, isStatic:boolean = true): ExpressionNode {
   return {
     type: 4,
     content,
+    isStatic
   };
 }
