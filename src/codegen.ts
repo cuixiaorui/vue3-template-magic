@@ -108,14 +108,14 @@ function genElementDirective(node: DirectiveNode, context: Context) {
 }
 
 function genArgString(node: ExpressionNode | undefined, symbol: string) {
-  if(!node) return ""
+  if (!node) return "";
 
   let argContent = node ? `${node.content}` : "";
 
-  if(!node.isStatic){
-    return `[${argContent}]`
-  }else{
-    return `${symbol}${argContent}`
+  if (!node.isStatic) {
+    return `${symbol}[${argContent}]`;
+  } else {
+    return `${symbol}${argContent}`;
   }
 }
 

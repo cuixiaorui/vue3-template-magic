@@ -272,7 +272,7 @@ describe("codegen", () => {
           props: [
             createDirectiveNode("model", createExpressNode("age"), undefined, [
               "number",
-              "lazy"
+              "lazy",
             ]),
           ],
         }),
@@ -281,11 +281,35 @@ describe("codegen", () => {
 
     const { code } = generate(root);
 
-    expect(code).toMatchInlineSnapshot('"<div v-model.number.lazy=\\"age\\"></div>"');
+    expect(code).toMatchInlineSnapshot(
+      '"<div v-model.number.lazy=\\"age\\"></div>"'
+    );
   });
 
+  it("Dynamic Arguments", () => {
+    const root = createRootNode({
+      children: [
+        createElementNode({
+          tag: "a",
+          props: [
+            createDirectiveNode(
+              "bind",
+              createExpressNode("url"),
+              createExpressNode("attributeName", false)
+            ),
+          ],
+        }),
+      ],
+    });
 
-  it('Dynamic Arguments', () => {
+    const { code } = generate(root);
+
+    expect(code).toMatchInlineSnapshot(
+      '"<a v-bind:[attributeName]=\\"url\\"></a>"'
+    );
+  });
+
+  it.skip("Dynamic Arguments and shorthand", () => {
     const root = createRootNode({
       children: [
         createElementNode({
@@ -295,6 +319,8 @@ describe("codegen", () => {
               "bind",
               createExpressNode("url"),
               createExpressNode("attributeName", false),
+              [],
+              true
             ),
           ],
         }),
@@ -303,6 +329,8 @@ describe("codegen", () => {
 
     const { code } = generate(root);
 
-    expect(code).toMatchInlineSnapshot('"<a v-bind[attributeName]=\\"url\\"></a>"');
+    expect(code).toMatchInlineSnapshot(
+      '"<a :[attributeName]=\\"url\\"></a>"'
+    );
   });
 });
