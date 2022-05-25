@@ -309,7 +309,7 @@ describe("codegen", () => {
     );
   });
 
-  it.skip("Dynamic Arguments and shorthand", () => {
+  it("Dynamic Arguments and shorthand", () => {
     const root = createRootNode({
       children: [
         createElementNode({
